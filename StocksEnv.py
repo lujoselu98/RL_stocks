@@ -38,8 +38,9 @@ class StocksEnv(gym.Env):
 
         self.viewer = None
 
-        self.action_space = spaces.Box(low=0, high=4,
-                                       shape=(1,), dtype=np.float32)
+        #self.action_space = spaces.Box(low=0, high=4,
+         #                              shape=(1,), dtype=np.float32)
+        self.action_space = spaces.Discrete(5)    
         self.observation_space = spaces.Box(low=self.low_state, high=self.high_state,
                                             dtype=np.float32)        
         
@@ -75,7 +76,7 @@ class StocksEnv(gym.Env):
         return [seed]
 
     def step(self, action):
-        action = action[0]
+      
         action = [action,1.]
         cur_timestep = self.cur_timestep
         ts_left = self.series_length - (cur_timestep - self.starting_point)
