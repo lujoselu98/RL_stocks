@@ -32,6 +32,19 @@ class StocksEnv(gym.Env):
         self.starting_cash_mean = 200
         self.randomize_cash_std = 0
         
+        #-----
+        self.low_state = np.zeros((8,))
+        self.high_state = np.zeros((8,))+100000000
+
+        self.viewer = None
+
+        self.action_space = spaces.Box(low=0, high=3,
+                                       shape=(1,), dtype=np.float32)
+        self.observation_space = spaces.Box(low=self.low_state, high=self.high_state,
+                                            dtype=np.float32)        
+        
+        #===
+        
         self.state = torch.FloatTensor(torch.zeros(8))
         
         self.starting_cash = max(int(np.random.normal(self.starting_cash_mean, self.randomize_cash_std)), 0.)
