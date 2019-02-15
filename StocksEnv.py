@@ -45,7 +45,7 @@ class StocksEnv(gym.Env):
         
         #===
         
-        self.state = torch.FloatTensor(torch.zeros(8))
+        self.state = np.array(torch.FloatTensor(torch.zeros(8)))
         
         self.starting_cash = max(int(np.random.normal(self.starting_cash_mean, self.randomize_cash_std)), 0.)
         
@@ -75,7 +75,8 @@ class StocksEnv(gym.Env):
         return [seed]
 
     def step(self, action):
-        action = [action, 1.]
+        action = action[0]
+        action = [action,1.]
         cur_timestep = self.cur_timestep
         ts_left = self.series_length - (cur_timestep - self.starting_point)
         retval = None
