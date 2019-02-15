@@ -91,6 +91,7 @@ class StocksEnv(gym.Env):
             bonus = 0.
             if self.state[0] > 0 and self.state[1] > 0:
                 bonus = self.diversification_bonus
+            print("\nEpisode Terminating done")    
             return np.array(new_state), cur_value + bonus + gain, True, { "msg": "done"}
         
         if action[0] == 2:
@@ -104,6 +105,7 @@ class StocksEnv(gym.Env):
                 new_state = [self.state[0], self.state[1], self.state[2], *self.next_opening_price(), \
                         cur_value, *self.five_day_window()]
                 self.state = new_state
+                print("\nEpisode Terminating Bankrupt")
                 retval = np.array(new_state), -ts_left+gain/2, True, { "msg": "bankrupted self"}
             else:
                 apl_shares = self.state[0] + action[1]
@@ -118,6 +120,7 @@ class StocksEnv(gym.Env):
                 new_state = [self.state[0], self.state[1], self.state[2], *self.next_opening_price(), \
                         cur_value, *self.five_day_window()]
                 self.state = new_state
+                print("\nEpisode Terminating Bankrupt__")
                 retval =  np.array(new_state), -ts_left+gain/2, True, { "msg": "bankrupted self"}
             else:
                 msf_shares = self.state[1] + action[1]
@@ -133,6 +136,7 @@ class StocksEnv(gym.Env):
                 new_state = [self.state[0], self.state[1], self.state[2], *self.next_opening_price(), \
                         cur_value, *self.five_day_window()]
                 self.state = new_state
+                print("\nEpisode Terminating soldmore")
                 retval = np.array(new_state), -ts_left+gain/2, True, { "msg": "sold more than have"}
             else:
                 apl_shares = self.state[0] - action[1]
@@ -147,6 +151,7 @@ class StocksEnv(gym.Env):
                 new_state = [self.state[0], self.state[1], self.state[2], *self.next_opening_price(), \
                         cur_value, *self.five_day_window()]
                 self.state = new_state
+                print("\nEpisode Terminating soldmore4")
                 retval = np.array(new_state), -ts_left+gain/2, True, { "msg": "sold more than have"}
             else:
                 msf_shares = self.state[1] - action[1]
@@ -160,7 +165,7 @@ class StocksEnv(gym.Env):
         return retval
 
     def reset(self):
-        self.state = torch.FloatTensor(torch.zeros(8))
+        self.state = np.array(torch.FloatTensor(torch.zeros(8)))
         self.starting_cash = max(int(np.random.normal(self.starting_cash_mean, self.randomize_cash_std)), 0.)
         self.cur_timestep = self.starting_point
         self.state[0] = max(int(np.random.normal(self.starting_shares_mean, self.randomize_shares_std)), 0.)
@@ -173,7 +178,7 @@ class StocksEnv(gym.Env):
         self.state[6] = self.five_day_window()[0]
         self.state[7] = self.five_day_window()[1]       
         self.done = False
-        return np.array(self.state)
+        return self.state
 
     
     def portfolio_value(self):
