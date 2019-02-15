@@ -4,6 +4,14 @@ from gym import spaces, logger
 from gym.utils import seeding
 import numpy as np
 
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.autograd as autograd
+import torch.nn.functional as F
+from torch.distributions import Categorical
+import matplotlib.pyplot as plt
+
 import pickle
 with open("./aplmsfopenclose.pkl", "rb") as f:
     d = pickle.load(f)
