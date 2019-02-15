@@ -5,7 +5,7 @@ from gym.utils import seeding
 import numpy as np
 
 import pickle
-with open("C:\\Users\\kavit gangar\\Documents\\FYP_RL\\aplmsfopenclose.pkl", "rb") as f:
+with open("./aplmsfopenclose.pkl", "rb") as f:
     d = pickle.load(f)
 
 
