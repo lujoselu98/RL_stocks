@@ -76,6 +76,7 @@ class StocksEnv(gym.Env):
         return [seed]
 
     def step(self, action):
+
       
         action = [action,1.]
         cur_timestep = self.cur_timestep
@@ -161,7 +162,9 @@ class StocksEnv(gym.Env):
                 self.state = new_state
                 retval = np.array(new_state), self.inaction_penalty-ts_left+gain, False, { "msg": "sold MSFT"}
                 
+        print("\n action taken: ",action, " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2])
         self.cur_timestep += self.stride
+
         return retval
 
     def reset(self):
