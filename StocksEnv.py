@@ -133,7 +133,7 @@ class StocksEnv(gym.Env):
         
 
         if action[0] == 1:
-            if action[1] > self.state[0]:
+            if action[0] > self.state[0]:
                 new_state = [self.state[0], self.state[1], self.state[2], *self.next_opening_price(), \
                         cur_value, *self.five_day_window()]
                 self.state = new_state
@@ -148,7 +148,7 @@ class StocksEnv(gym.Env):
                 retval = np.array(new_state), self.inaction_penalty-ts_left+gain, False, { "msg": "sold AAPL"}
                 
         if action[0] == 4:
-            if action[1] > self.state[1]:
+            if action[0] > self.state[1]:
                 new_state = [self.state[0], self.state[1], self.state[2], *self.next_opening_price(), \
                         cur_value, *self.five_day_window()]
                 self.state = new_state
