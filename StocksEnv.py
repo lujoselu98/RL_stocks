@@ -13,7 +13,7 @@ from torch.distributions import Categorical
 import matplotlib.pyplot as plt
 
 import pickle
-with open("./aplmsfopenclose.pkl", "rb") as f:
+with open("./aplmsfopencloseOG.pkl", "rb") as f:
     d = pickle.load(f)
 
 
@@ -54,8 +54,8 @@ class StocksEnv(gym.Env):
         self.starting_point = 1
         self.cur_timestep = self.starting_point
         
-        self.state[0] = 10
-        self.state[1] = 10
+        self.state[0] = 2
+        self.state[1] = 2
         self.starting_portfolio_value = self.portfolio_value()
         self.state[2] = self.starting_cash
         self.state[3] = apl_open[self.cur_timestep]
@@ -172,8 +172,8 @@ class StocksEnv(gym.Env):
         self.state = np.array(torch.FloatTensor(torch.zeros(8)))
         self.starting_cash = 200
         self.cur_timestep = 1
-        self.state[0] = 10
-        self.state[1] = 10
+        self.state[0] = 2
+        self.state[1] = 2
         self.state[2] = 200
         self.state[3] = apl_open[self.cur_timestep]
         self.state[4] = msf_open[self.cur_timestep]
