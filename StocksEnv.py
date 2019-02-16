@@ -139,7 +139,7 @@ class StocksEnv(gym.Env):
                         cur_value, *self.five_day_window()]
                 self.state = new_state
                 print("\nEpisode Terminating soldmore")
-                retval = np.array(new_state), -ts_left+gain/2, True, { "msg": "sold more than have"}
+                retval = np.array(new_state), -10000, True, { "msg": "sold more than have"}
             else:
                 apl_shares = self.state[0] - action[1]
                 cash_gained = action[1] * apl_open[cur_timestep] * 0.9
@@ -154,7 +154,7 @@ class StocksEnv(gym.Env):
                         cur_value, *self.five_day_window()]
                 self.state = new_state
                 print("\nEpisode Terminating soldmore4")
-                retval = np.array(new_state), -ts_left+gain/2, True, { "msg": "sold more than have"}
+                retval = np.array(new_state), -10000, True, { "msg": "sold more than have"}
             else:
                 msf_shares = self.state[1] - action[1]
                 cash_gained = action[1] * msf_open[cur_timestep] * 0.9
