@@ -13,7 +13,7 @@ from torch.distributions import Categorical
 import matplotlib.pyplot as plt
 
 import pickle
-with open("./aplmsfopenclose.pkl", "rb") as f:
+with open("./aplmsfopencloseOG.pkl", "rb") as f:
     d = pickle.load(f)
 
 
@@ -48,14 +48,14 @@ class StocksEnv(gym.Env):
         
         self.state = np.array(torch.FloatTensor(torch.zeros(8)))
         
-        self.starting_cash = max(int(np.random.normal(self.starting_cash_mean, self.randomize_cash_std)), 0.)
-        
+        self.starting_cash = 200
+
         self.series_length = 208
         self.starting_point = 1
         self.cur_timestep = self.starting_point
         
-        self.state[0] = max(int(np.random.normal(self.starting_shares_mean, self.randomize_shares_std)), 0.)
-        self.state[1] = max(int(np.random.normal(self.starting_shares_mean, self.randomize_shares_std)), 0.)
+        self.state[0] = 2
+        self.state[1] = 2
         self.starting_portfolio_value = self.portfolio_value()
         self.state[2] = self.starting_cash
         self.state[3] = apl_open[self.cur_timestep]
@@ -91,7 +91,7 @@ class StocksEnv(gym.Env):
             bonus = 0.
             if self.state[0] > 0 and self.state[1] > 0:
                 bonus = self.diversification_bonus
-            print("\nEpisode Terminating done")    
+            print("\nEpisode Terminating done  -- portfoliovalue is " + cur_value )    
             return np.array(new_state), cur_value + bonus + gain, True, { "msg": "done"}
         
         if action[0] == 2:
