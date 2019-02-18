@@ -13,7 +13,7 @@ from torch.distributions import Categorical
 import matplotlib.pyplot as plt
 
 import pickle
-with open("./aplmsfopencloseOG.pkl", "rb") as f:
+with open("./aplmsfopenclose.pkl", "rb") as f:
 	d = pickle.load(f)
 
 
