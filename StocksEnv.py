@@ -40,7 +40,7 @@ class StocksEnv(gym.Env):
 
 		#self.action_space = spaces.Box(low=0, high=4,
 		 #                              shape=(1,), dtype=np.float32)
-		self.action_space = spaces.Discrete(5)    
+		self.action_space = spaces.Discrete(4)    
 		self.observation_space = spaces.Box(low=self.low_state, high=self.high_state,
 											dtype=np.float32)        
 		
