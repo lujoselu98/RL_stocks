@@ -59,7 +59,7 @@ class StocksEnv(gym.Env):
 		self.state[6] = self.five_day_window()[0]
 		self.state[7] = self.five_day_window()[1]
 		
-		self.max_stride = 5
+		self.max_stride = 10
 		self.stride = self.max_stride # no longer varying it
 		
 		self.done = False
@@ -201,7 +201,7 @@ class StocksEnv(gym.Env):
 	
 	def five_day_window(self):
 		step = self.cur_timestep
-		if step < 5:
+		if step < 10:
 			return [apl_open[0], msf_open[0]]
 		apl5 = apl_open[step-10:step].mean()
 		msf5 = msf_open[step-10:step].mean()
