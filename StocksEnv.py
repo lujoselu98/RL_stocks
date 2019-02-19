@@ -74,7 +74,7 @@ class StocksEnv(gym.Env):
 
 		#print("\n previous state", " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2])
 		action = [action,1.]
-		print("\n previous state", " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2]," - ",self.state[3]," - ",self.state[4],)
+		#print("\n previous state", " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2]," - ",self.state[3]," - ",self.state[4],)
 		cur_timestep = self.cur_timestep
 		ts_left = self.series_length - (cur_timestep - self.starting_point)
 		retval = None
@@ -166,7 +166,7 @@ class StocksEnv(gym.Env):
 				self.state = new_state
 				retval = np.array(new_state),  -self.inaction_penalty-ts_left +gain, False, { "msg": "sold MSFT"}
 				
-		print("\n action taken: ",action, " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2])
+		#print("\n action taken: ",action, " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2])
 		self.cur_timestep += self.stride
 
 		return retval
