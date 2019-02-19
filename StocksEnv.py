@@ -4,12 +4,7 @@ from gym import spaces, logger
 from gym.utils import seeding
 import numpy as np
 
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.autograd as autograd
-import torch.nn.functional as F
-from torch.distributions import Categorical
+
 import matplotlib.pyplot as plt
 
 import pickle
@@ -40,13 +35,13 @@ class StocksEnv(gym.Env):
 
 		#self.action_space = spaces.Box(low=0, high=4,
 		 #                              shape=(1,), dtype=np.float32)
-		self.action_space = spaces.Discrete(4)    
+		self.action_space = spaces.Discrete(5)    
 		self.observation_space = spaces.Box(low=self.low_state, high=self.high_state,
 											dtype=np.float32)        
 		
 		#===
 		
-		self.state = np.array(torch.FloatTensor(torch.zeros(8)))
+		self.state = np.zeros(8)
 		
 		self.starting_cash = 200
 
@@ -79,7 +74,7 @@ class StocksEnv(gym.Env):
 
 		#print("\n previous state", " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2])
 		action = [action,1.]
-		print("\n previous state", " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2])
+		print("\n previous state", " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2]," - ",self.state[3]," - ",self.state[4],)
 		cur_timestep = self.cur_timestep
 		ts_left = self.series_length - (cur_timestep - self.starting_point)
 		retval = None
@@ -177,11 +172,11 @@ class StocksEnv(gym.Env):
 		return retval
 
 	def reset(self):
-		self.state = np.array(torch.FloatTensor(torch.zeros(8)))
+		self.state = np.zeros(8)
 		self.starting_cash = 200
 		self.cur_timestep = 1
-		self.state[0] = 10
-		self.state[1] = 10
+		self.state[0] = 20
+		self.state[1] = 25
 		self.state[2] = 200
 		self.state[3] = apl_open[self.cur_timestep]
 		self.state[4] = msf_open[self.cur_timestep]
@@ -208,8 +203,8 @@ class StocksEnv(gym.Env):
 		step = self.cur_timestep
 		if step < 5:
 			return [apl_open[0], msf_open[0]]
-		apl5 = apl_open[step-10:step].mean()
-		msf5 = msf_open[step-10:step].mean()
+		apl5 = apl_open[step-5:step].mean()
+		msf5 = msf_open[step-5:step].mean()
 		return [apl5, msf5]
 	
 	
