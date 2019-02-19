@@ -54,7 +54,7 @@ class StocksEnvAAPL(gym.Env):
 		self.state[1] = self.starting_cash
 		self.state[2] = apl_open[self.cur_timestep]
 		self.state[3] = self.starting_portfolio_value
-		self.state[4] = self.five_day_window()[0]
+		self.state[4] = self.five_day_window()
 		
 		self.max_stride = 5
 		self.stride = self.max_stride # no longer varying it
@@ -146,7 +146,7 @@ class StocksEnvAAPL(gym.Env):
 		self.state[2] = apl_open[self.cur_timestep]
 		self.starting_portfolio_value = self.portfolio_value_states()
 		self.state[3] = self.starting_portfolio_value
-		self.state[4] = self.five_day_window()[0]
+		self.state[4] = self.five_day_window()
 		self.done = False
 		return self.state
 
