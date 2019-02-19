@@ -88,7 +88,7 @@ class StocksEnv(gym.Env):
 			bonus = 0.
 			if self.state[0] > 0 and self.state[1] > 0:
 				bonus = self.diversification_bonus
-			print("\nEpisode Terminating done  -- portfoliovalue is " + cur_value )    
+			print("\nEpisode Terminating done  -- portfoliovalue is " , cur_value )    
 			return np.array(new_state), cur_value + bonus + gain, True, { "msg": "done"}
 		
 		if action[0] == 2:
