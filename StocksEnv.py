@@ -175,8 +175,8 @@ class StocksEnv(gym.Env):
 		self.state = np.zeros(8)
 		self.starting_cash = 200
 		self.cur_timestep = 1
-		self.state[0] = 91
-		self.state[1] = 104
+		self.state[0] = 70
+		self.state[1] = 93
 		self.state[2] = 200
 		self.state[3] = apl_open[self.cur_timestep]
 		self.state[4] = msf_open[self.cur_timestep]
@@ -203,8 +203,8 @@ class StocksEnv(gym.Env):
 		step = self.cur_timestep
 		if step < 5:
 			return [apl_open[0], msf_open[0]]
-		apl5 = apl_open[step-5:step].mean()
-		msf5 = msf_open[step-5:step].mean()
+		apl5 = apl_open[step-10:step].mean()
+		msf5 = msf_open[step-10:step].mean()
 		return [apl5, msf5]
 	
 	
