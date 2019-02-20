@@ -3,7 +3,7 @@ import gym
 from gym import spaces, logger
 from gym.utils import seeding
 import numpy as np
-
+import random
 
 import matplotlib.pyplot as plt
 
@@ -88,14 +88,14 @@ class StocksEnvAAPL(gym.Env):
 				bonus = self.diversification_bonus
 			print("\n  REWARD = {} Episode Terminating done  -- portfoliovalue is ", self.reward ,cur_value  ) 
 			self.reward += bonus + gain*1000
-			return np.array(new_state),  bonus + gain*1000, True, { "msg": "done"}
+			return np.array(new_state),  1, True, { "msg": "done"}
 		
 		if action[0] == 2:
 			new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
 					cur_value, self.five_day_window()]
 			self.state = new_state
 			self.reward += -self.inaction_penalty-ts_left +gain*1000
-			retval = np.array(new_state),  -self.inaction_penalty-ts_left + gain*1000, False, { "msg": "nothing" }
+			retval = np.array(new_state),  1 , False, { "msg": "nothing" }
 		
 		if action[0] == 0:
 			if action[1] * apl_open[cur_timestep] > self.state[1]:
@@ -105,7 +105,7 @@ class StocksEnvAAPL(gym.Env):
 				self.reward += -100000
 				print("\nEpisode Terminating Bankrupt REWARD = " ,self.reward)
 				
-				retval = np.array(new_state), -100000, True, { "msg": "bankrupted self"}
+				retval = np.array(new_state), 1, True, { "msg": "bankrupted self"}
 				
 			else:
 				apl_shares = self.state[0] + action[1]
@@ -116,7 +116,7 @@ class StocksEnvAAPL(gym.Env):
 				cur_value = self.portfolio_value()
 				gain = cur_value - self.starting_portfolio_value
 				self.reward += -self.inaction_penalty-ts_left +gain*1000
-				retval = np.array(new_state),  -self.inaction_penalty-ts_left +gain*1000 , False, { "msg": "bought AAPL"}
+				retval = np.array(new_state), 1 , False, { "msg": "bought AAPL"}
 				
 		
 
@@ -128,7 +128,7 @@ class StocksEnvAAPL(gym.Env):
 				self.reward += -100000
 				print("\nEpisode Terminating soldmore  REWARD = ",self.reward)
 				
-				retval = np.array(new_state),  -100000, True, { "msg": "sold more than have"}
+				retval = np.array(new_state),  1, True, { "msg": "sold more than have"}
 			else:
 				apl_shares = self.state[0] - action[1]
 				cash_gained = action[1] * apl_open[cur_timestep] * 0.9
@@ -138,7 +138,7 @@ class StocksEnvAAPL(gym.Env):
 				cur_value = self.portfolio_value()
 				gain = cur_value - self.starting_portfolio_value
 				self.reward += -self.inaction_penalty-ts_left +gain*1000
-				retval = np.array(new_state),  -self.inaction_penalty-ts_left + gain*1000, False, { "msg": "sold AAPL"}
+				retval = np.array(new_state),  1, False, { "msg": "sold AAPL"}
 				
 
 				
@@ -151,8 +151,8 @@ class StocksEnvAAPL(gym.Env):
 		self.state = np.zeros(5)
 		self.starting_cash = 200
 		self.cur_timestep = 1
-		self.state[0] = 120
-		self.state[1] = 4000
+		self.state[0] = random.randint(60,120)
+		self.state[1] = 1000
 		self.state[2] = apl_open[self.cur_timestep]
 		self.starting_portfolio_value = self.portfolio_value_states()
 		self.state[3] = self.starting_portfolio_value
