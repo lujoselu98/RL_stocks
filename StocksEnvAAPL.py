@@ -89,14 +89,14 @@ class StocksEnvAAPL(gym.Env):
 			return np.array(new_state), cur_value + bonus + gain, True, { "msg": "done"}
 		
 		if action[0] == 2:
-			new_state = [self.state[0], self.state[1] self.next_opening_price(), \
+			new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
 					cur_value, self.five_day_window()]
 			self.state = new_state
 			retval = np.array(new_state),  -self.inaction_penalty-ts_left +gain, False, { "msg": "nothing" }
 		
 		if action[0] == 0:
 			if action[1] * apl_open[cur_timestep] > self.state[2]:
-				new_state = [self.state[0], self.state[1] self.next_opening_price(), \
+				new_state = [self.state[0], self.state[1], self.next_opening_price(), \
 						cur_value, self.five_day_window()]
 				self.state = new_state
 				print("\nEpisode Terminating Bankrupt")
