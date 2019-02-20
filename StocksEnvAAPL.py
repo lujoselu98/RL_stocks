@@ -79,8 +79,8 @@ class StocksEnvAAPL(gym.Env):
 		gain = cur_value - self.starting_portfolio_value
 		
 		if cur_timestep >= self.starting_point + (self.series_length * self.stride):
-			new_state = [self.state[0], self.state[1], *self.next_opening_price(), \
-						cur_value, *self.five_day_window()]
+			new_state = [self.state[0], self.state[1], self.next_opening_price(), \
+						cur_value, self.five_day_window()]
 			self.state = new_state
 			bonus = 0.
 			if self.state[0] > 0 and self.state[1] > 0:
@@ -89,23 +89,23 @@ class StocksEnvAAPL(gym.Env):
 			return np.array(new_state), cur_value + bonus + gain, True, { "msg": "done"}
 		
 		if action[0] == 2:
-			new_state = [self.state[0], self.state[1] *self.next_opening_price(), \
-					cur_value, *self.five_day_window()]
+			new_state = [self.state[0], self.state[1] self.next_opening_price(), \
+					cur_value, self.five_day_window()]
 			self.state = new_state
 			retval = np.array(new_state),  -self.inaction_penalty-ts_left +gain, False, { "msg": "nothing" }
 		
 		if action[0] == 0:
 			if action[1] * apl_open[cur_timestep] > self.state[2]:
-				new_state = [self.state[0], self.state[1] *self.next_opening_price(), \
-						cur_value, *self.five_day_window()]
+				new_state = [self.state[0], self.state[1] self.next_opening_price(), \
+						cur_value, self.five_day_window()]
 				self.state = new_state
 				print("\nEpisode Terminating Bankrupt")
 				retval = np.array(new_state),  -self.inaction_penalty-ts_left +gain/2, True, { "msg": "bankrupted self"}
 			else:
 				apl_shares = self.state[0] + action[1]
 				cash_spent = action[1] * apl_open[cur_timestep] * 1.1
-				new_state = [apl_shares, self.state[1] - cash_spent, *self.next_opening_price(), \
-					   cur_value, *self.five_day_window()]
+				new_state = [apl_shares, self.state[1] - cash_spent, self.next_opening_price(), \
+					   cur_value, self.five_day_window()]
 				self.state = new_state
 				cur_value = self.portfolio_value()
 				gain = cur_value - self.starting_portfolio_value
@@ -115,8 +115,8 @@ class StocksEnvAAPL(gym.Env):
 
 		if action[0] == 1:
 			if action[1] > self.state[0]:
-				new_state = [self.state[0],  self.state[1], *self.next_opening_price(), \
-						cur_value, *self.five_day_window()]
+				new_state = [self.state[0],  self.state[1], self.next_opening_price(), \
+						cur_value, self.five_day_window()]
 				self.state = new_state
 				print("\nEpisode Terminating soldmore")
 				retval = np.array(new_state),  -self.inaction_penalty-ts_left +gain/2, True, { "msg": "sold more than have"}
