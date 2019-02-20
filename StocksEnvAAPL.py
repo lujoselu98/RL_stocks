@@ -152,7 +152,7 @@ class StocksEnvAAPL(gym.Env):
 		self.starting_cash = 200
 		self.cur_timestep = 1
 		self.state[0] = 120
-		self.state[1] = 2000
+		self.state[1] = 4000
 		self.state[2] = apl_open[self.cur_timestep]
 		self.starting_portfolio_value = self.portfolio_value_states()
 		self.state[3] = self.starting_portfolio_value
