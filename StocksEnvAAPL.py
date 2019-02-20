@@ -18,7 +18,7 @@ msf_open = d["mo"]
 msf_close = d["mc"]
 
 
-class StocksEnvAAPL(gym.Env):
+class StocksEnv(gym.Env):
 	
 
 	def __init__(self):
@@ -49,7 +49,7 @@ class StocksEnvAAPL(gym.Env):
 		self.starting_point = 1
 		self.cur_timestep = self.starting_point
 		
-		self.state[0] = 10
+		self.state[0] = 70
 		self.starting_portfolio_value = self.portfolio_value_states()
 		self.state[1] = self.starting_cash
 		self.state[2] = apl_open[self.cur_timestep]
@@ -104,11 +104,11 @@ class StocksEnvAAPL(gym.Env):
 			else:
 				apl_shares = self.state[0] + action[1]
 				cash_spent = action[1] * apl_open[cur_timestep] * 1.1
-				cur_value = self.portfolio_value()
-				gain = cur_value - self.starting_portfolio_value
 				new_state = [apl_shares, self.state[1] - cash_spent, *self.next_opening_price(), \
 					   cur_value, *self.five_day_window()]
 				self.state = new_state
+				cur_value = self.portfolio_value()
+				gain = cur_value - self.starting_portfolio_value
 				retval = np.array(new_state),  -self.inaction_penalty-ts_left +gain , False, { "msg": "bought AAPL"}
 				
 		
@@ -123,12 +123,12 @@ class StocksEnvAAPL(gym.Env):
 			else:
 				apl_shares = self.state[0] - action[1]
 				cash_gained = action[1] * apl_open[cur_timestep] * 0.9
+				new_state = [apl_shares , self.state[1] + cash_gained, self.next_opening_price(), \
+					   cur_value, self.five_day_window()]
+				self.state = new_state
 				cur_value = self.portfolio_value()
 				gain = cur_value - self.starting_portfolio_value
-				new_state = [apl_shares , self.state[1] + cash_gained, *self.next_opening_price(), \
-					   cur_value, *self.five_day_window()]
-				self.state = new_state
-				retval = np.array(new_state),  -self.inaction_penalty-ts_left +gain, False, { "msg": "sold AAPL"}
+				retval = np.array(new_state),  -self.inaction_penalty-ts_left + gain, False, { "msg": "sold AAPL"}
 				
 
 				
@@ -141,7 +141,7 @@ class StocksEnvAAPL(gym.Env):
 		self.state = np.zeros(5)
 		self.starting_cash = 200
 		self.cur_timestep = 1
-		self.state[0] = 20
+		self.state[0] = 70
 		self.state[1] = 200
 		self.state[2] = apl_open[self.cur_timestep]
 		self.starting_portfolio_value = self.portfolio_value_states()
