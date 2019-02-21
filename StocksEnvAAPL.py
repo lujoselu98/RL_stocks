@@ -148,7 +148,7 @@ class StocksEnvAAPL(gym.Env):
 		return retval
 
 	def reset(self):
-		self.state = np.zeros(5)
+		self.state = np.zeros(4)
 		self.starting_cash = 200
 		self.cur_timestep = random.randint(0,100)
 		self.starting_point = self.cur_timestep
