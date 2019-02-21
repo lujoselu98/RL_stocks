@@ -28,8 +28,8 @@ class StocksEnvAAPL(gym.Env):
 		#self.randomize_cash_std = 0
 		
 		#-----
-		self.low_state = np.zeros((5,))
-		self.high_state = np.zeros((5,))+1000000
+		self.low_state = np.zeros((4,))
+		self.high_state = np.zeros((4,))+1000000
 
 		self.viewer = None
 
@@ -41,19 +41,19 @@ class StocksEnvAAPL(gym.Env):
 		
 		#===
 		
-		self.state = np.zeros(5)
+		self.state = np.zeros(4)
 		
 		self.starting_cash = 2000
 
-		self.series_length = 100
-		self.starting_point = 1
-		self.cur_timestep = self.starting_point
+		self.series_length = random.randint(100,200)
+		#self.starting_point = 1
+		#self.cur_timestep = self.starting_point
 		
 		#self.state[0] = 70
 		#self.starting_portfolio_value = self.portfolio_value_states()
 		#self.state[1] = self.starting_cash
 		#self.state[2] = apl_open[self.cur_timestep]
-		#self.state[3] = self.starting_portfolio_value
+		##self.state[3] = self.starting_portfolio_value
 		#self.state[4] = self.five_day_window()
 		
 		self.max_stride = 5
@@ -72,7 +72,7 @@ class StocksEnvAAPL(gym.Env):
 
 		#print("\n previous state", " - " ,self.state[5]," - ",self.state[0], " - ",self.state[1], " - ",self.state[2])
 		action = [action,1.]
-		print("\n previous state", " pf- " ,self.state[3]," - ",self.state[0], " - ",self.state[1]," - ",self.state[2])
+		print("\n previous state", " pf- " ,self.portfolio_value()," - ",self.state[0], " - ",self.state[1]," - ",self.state[2])
 		cur_timestep = self.cur_timestep
 		ts_left = self.series_length* self.stride - (cur_timestep - self.starting_point)
 		retval = None
@@ -81,7 +81,7 @@ class StocksEnvAAPL(gym.Env):
 		
 		if cur_timestep >= self.starting_point + (self.series_length * self.stride):
 			new_state = [self.state[0], self.state[1], self.next_opening_price(), \
-						cur_value, self.five_day_window()]
+						 self.five_day_window()]
 			self.state = new_state
 			bonus = 0.
 			if self.state[0] > 0 :
@@ -92,7 +92,7 @@ class StocksEnvAAPL(gym.Env):
 		
 		if action[0] == 2:
 			new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
-					cur_value, self.five_day_window()]
+					 self.five_day_window()]
 			self.state = new_state
 			self.reward += -self.inaction_penalty-ts_left +gain
 			retval = np.array(new_state),  1 , False, { "msg": "nothing" }
@@ -100,7 +100,7 @@ class StocksEnvAAPL(gym.Env):
 		if action[0] == 0:
 			if action[1] * apl_open[cur_timestep] > self.state[1]:
 				new_state = [self.state[0], self.state[1], self.next_opening_price(), \
-						cur_value, self.five_day_window()]
+						 self.five_day_window()]
 				self.state = new_state
 				self.reward += -10000
 				print("\nEpisode Terminating Bankrupt REWARD = " ,self.reward)
@@ -111,7 +111,7 @@ class StocksEnvAAPL(gym.Env):
 				apl_shares = self.state[0] + action[1]
 				cash_spent = action[1] * apl_open[cur_timestep] * 1.1
 				new_state = [apl_shares, self.state[1] - cash_spent, self.next_opening_price(), \
-					   self.next_open_price(apl_shares) + self.state[1] - cash_spent, self.five_day_window()]
+					    self.five_day_window()]
 				self.state = new_state
 				cur_value = self.portfolio_value()
 				gain = cur_value - self.starting_portfolio_value
@@ -123,7 +123,7 @@ class StocksEnvAAPL(gym.Env):
 		if action[0] == 1:
 			if action[1] > self.state[0]:
 				new_state = [self.state[0],  self.state[1], self.next_opening_price(), \
-						cur_value, self.five_day_window()]
+						 self.five_day_window()]
 				self.state = new_state
 				self.reward += -1000
 				print("\nEpisode Terminating soldmore  REWARD = ",self.reward)
@@ -133,7 +133,7 @@ class StocksEnvAAPL(gym.Env):
 				apl_shares = self.state[0] - action[1]
 				cash_gained = action[1] * apl_open[cur_timestep] * 0.9
 				new_state = [apl_shares , self.state[1] + cash_gained, self.next_opening_price(), \
-					   self.next_open_price(apl_shares) + self.state[1] + cash_gained, self.five_day_window()]
+					   self.five_day_window()]
 				self.state = new_state
 				cur_value = self.portfolio_value()
 				gain = cur_value - self.starting_portfolio_value
@@ -142,7 +142,7 @@ class StocksEnvAAPL(gym.Env):
 				
 
 				
-		print("\n action taken: ",action, " pf- " ,self.state[3]," - ",self.state[0],  " - ",self.state[1])
+		print("\n action taken: ",action, " pf- " ,self.portfolio_value()," - ",self.state[0],  " - ",self.state[1])
 		self.cur_timestep += self.stride
 
 		return retval
@@ -156,8 +156,7 @@ class StocksEnvAAPL(gym.Env):
 		self.state[1] = random.randint(1000,2000)
 		self.state[2] = apl_open[self.cur_timestep]
 		self.starting_portfolio_value = self.portfolio_value_states()
-		self.state[3] = self.starting_portfolio_value
-		self.state[4] = self.five_day_window()
+		self.state[3] = self.five_day_window()
 		self.done = False
 		self.reward = 0
 		return self.state
