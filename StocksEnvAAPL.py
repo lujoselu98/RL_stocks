@@ -88,7 +88,7 @@ class StocksEnvAAPL(gym.Env):
                 bonus = self.diversification_bonus
             print("\n  REWARD = {} Episode Terminating done  -- portfoliovalue is ", self.reward ,cur_value  ) 
             self.reward +=100+ bonus + gain
-            return np.array(new_state), 100 + bonus + gain , True, { "msg": "done"}
+            return np.array(new_state), 1000 + bonus + gain , True, { "msg": "done"}
         
         if action[0] == 2:
             new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
@@ -105,7 +105,7 @@ class StocksEnvAAPL(gym.Env):
                 self.reward += -ts_left
                 print("\nEpisode Terminating Bankrupt REWARD = " ,self.reward)
                 
-                retval = np.array(new_state), -ts_left , True, { "msg": "bankrupted self"}
+                retval = np.array(new_state), -10000 , True, { "msg": "bankrupted self"}
                 
             else:
                 apl_shares = self.state[0] + action[1]
@@ -128,7 +128,7 @@ class StocksEnvAAPL(gym.Env):
                 self.reward += -ts_left
                 print("\nEpisode Terminating soldmore  REWARD = ",self.reward)
                 
-                retval = np.array(new_state),  -ts_left , True, { "msg": "sold more than have"}
+                retval = np.array(new_state), -10000 , True, { "msg": "sold more than have"}
             else:
                 apl_shares = self.state[0] - action[1]
                 cash_gained = action[1] * apl_open[cur_timestep] * 0.9
