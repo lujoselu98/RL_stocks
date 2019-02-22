@@ -105,7 +105,7 @@ class StocksEnvAAPL(gym.Env):
                 self.reward += -ts_left
                 print("\nEpisode Terminating Bankrupt REWARD = " ,self.reward)
                 
-                retval = np.array(new_state), -10000 , True, { "msg": "bankrupted self"}
+                retval = np.array(new_state), -1000000 , True, { "msg": "bankrupted self"}
                 
             else:
                 apl_shares = self.state[0] + action[1]
@@ -128,7 +128,7 @@ class StocksEnvAAPL(gym.Env):
                 self.reward += -ts_left
                 print("\nEpisode Terminating soldmore  REWARD = ",self.reward)
                 
-                retval = np.array(new_state), -10000 , True, { "msg": "sold more than have"}
+                retval = np.array(new_state), -1000000 , True, { "msg": "sold more than have"}
             else:
                 apl_shares = self.state[0] - action[1]
                 cash_gained = action[1] * apl_open[cur_timestep] * 0.9
