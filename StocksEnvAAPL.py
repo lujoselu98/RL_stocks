@@ -121,7 +121,7 @@ class StocksEnvAAPL(gym.Env):
         
         
         if action[0] == 2:
-            self.nothing+=1
+            self.nothing += 1
             new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
                      self.five_day_window()]
             self.state = new_state
@@ -165,7 +165,7 @@ class StocksEnvAAPL(gym.Env):
         self.starting_cash = 200
         self.cur_timestep = random.randint(0,100)
         self.starting_point = self.cur_timestep
-        self.state[0] = random.randint(10,50)
+        self.state[0] = 0
         self.state[1] = random.randint(500,1000)
         self.state[2] = apl_open[self.cur_timestep]
         self.starting_portfolio_value = self.portfolio_value_states()
