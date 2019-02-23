@@ -47,6 +47,7 @@ class StocksEnvAAPL(gym.Env):
         self.buycount=0
         self.sellcount=0
         self.nothing=0
+        self.nothingpseudo=0
 
         self.series_length = 150
         #self.starting_point = 1
@@ -91,14 +92,18 @@ class StocksEnvAAPL(gym.Env):
                 bonus = self.diversification_bonus
                 
             self.reward +=bonus + gain
-            print("\n  REWARD = ",self.reward, " Episode Terminating done  -- profit is ",gain ," - " ,self.buycount , " - " ,self.sellcount, "-" ,self.nothing ) 
+            print("\n  REWARD = ",self.reward, " Episode Terminating done  -- profit is ",gain ," - " ,self.buycount , " - " ,self.sellcount, "-" ,self.nothing,"- ",self.nothingpseudo) 
             return np.array(new_state), bonus + gain , True, { "msg": "done"}
         
         
         
         if action[0] == 1:
-            if action[1] > self.state[0]:
-                action[0] = 2
+            self.nothingpseudo+=1
+            new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
+                     self.five_day_window()]
+            self.state = new_state
+            self.reward += -100000
+            retval = np.array(new_state),  -100000 , False, { "msg": "nothing" }
 
             else:
                 self.sellcount+=1
@@ -128,7 +133,7 @@ class StocksEnvAAPL(gym.Env):
                          self.five_day_window()]
                 self.state = new_state
                 self.reward += -100000
-                print("\nEpisode Terminating Bankrupt REWARD = " ,self.reward," - " ,self.buycount , " - " ,self.sellcount, "-" ,self.nothing)
+                print("\nEpisode Terminating Bankrupt REWARD = " ,self.reward," - " ,self.buycount , " - " ,self.sellcount, "-" ,self.nothing ,"- ",self.nothingpseudo)
                 
                 retval = np.array(new_state), -100000 , True, { "msg": "bankrupted self"}
                 
@@ -167,6 +172,7 @@ class StocksEnvAAPL(gym.Env):
         self.buycount=0
         self.sellcount=0
         self.nothing=0
+        self.nothingpseudo=0
         self.done = False
         self.reward = 0
         return self.state
