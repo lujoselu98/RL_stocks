@@ -98,12 +98,13 @@ class StocksEnvAAPL(gym.Env):
         
         
         if action[0] == 1:
-            self.nothingpseudo+=1
-            new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
+            if action[1] > self.state[0]:
+                self.nothingpseudo+=1
+                new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
                      self.five_day_window()]
-            self.state = new_state
-            self.reward += -100000
-            retval = np.array(new_state),  -100000 , False, { "msg": "nothing" }
+                self.state = new_state
+                self.reward += -100000
+                retval = np.array(new_state),  -100000 , False, { "msg": "nothing" }
 
             else:
                 self.sellcount+=1
