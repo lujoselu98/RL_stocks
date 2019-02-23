@@ -48,7 +48,7 @@ class StocksEnvAAPL(gym.Env):
         self.sellcount=0
         self.nothing=0
 
-        self.series_length = 200
+        self.series_length = 150
         #self.starting_point = 1
         #self.cur_timestep = self.starting_point
         
