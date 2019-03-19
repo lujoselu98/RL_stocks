@@ -97,7 +97,7 @@ class StocksEnvAAPL(gym.Env):
         
         
         
-        if action[0] == 1:
+        if action[0] == 2:
             if action[1] > self.state[0]:
                 self.nothingpseudo+=1
                 new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
@@ -120,7 +120,7 @@ class StocksEnvAAPL(gym.Env):
         
         
         
-        if action[0] == 2:
+        if action[0] == 1:
             self.nothing += 1
             new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
                      self.five_day_window()]
@@ -163,9 +163,9 @@ class StocksEnvAAPL(gym.Env):
     def reset(self):
         self.state = np.zeros(4)
         self.starting_cash = 200
-        self.cur_timestep = random.randint(0,100)
+        self.cur_timestep = 10
         self.starting_point = self.cur_timestep
-        self.state[0] = 0
+        self.state[0] = random.randint(0,25)
         self.state[1] = random.randint(500,1000)
         self.state[2] = apl_open[self.cur_timestep]
         self.starting_portfolio_value = self.portfolio_value_states()
