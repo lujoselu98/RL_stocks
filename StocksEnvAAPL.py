@@ -97,7 +97,7 @@ class StocksEnvAAPL(gym.Env):
         
         
         
-        if action[0] == 2:
+        if action[0] == 1:
             if action[1] > self.state[0]:
                 self.nothingpseudo+=1
                 new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
@@ -120,7 +120,7 @@ class StocksEnvAAPL(gym.Env):
         
         
         
-        if action[0] == 1:
+        if action[0] == 2:
             self.nothing += 1
             new_state = [self.state[0], self.state[1] ,self.next_opening_price(), \
                      self.five_day_window()]
