@@ -130,6 +130,7 @@ class StocksEnvAAPL(gym.Env):
         
         if action[0] == 0:
             if action[1] * apl_open[cur_timestep] > self.state[1]:
+                self.nothingpseudo += 1
                 new_state = [self.state[0], self.state[1], self.next_opening_price(), \
                          self.five_day_window()]
                 self.state = new_state
