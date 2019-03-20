@@ -135,7 +135,7 @@ class StocksEnvAAPL(gym.Env):
                          self.five_day_window()]
                 self.state = new_state
                 self.reward += -10000
-                print("\nEpisode Terminating Bankrupt REWARD = " ,self.reward," - " ,self.buycount , " - " ,self.sellcount, "-" ,self.nothing ,"- ",self.nothingpseudo)
+                #print("\nEpisode Terminating Bankrupt REWARD = " ,self.reward," - " ,self.buycount , " - " ,self.sellcount, "-" ,self.nothing ,"- ",self.nothingpseudo)
                 
                 retval = np.array(new_state), -10000 , False, { "msg": "bankrupted self"}
                 
