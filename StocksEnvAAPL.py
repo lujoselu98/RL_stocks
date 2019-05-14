@@ -8,15 +8,15 @@ import random
 import matplotlib.pyplot as plt
 
 import pickle
-with open("./aplmsfopenclose.pkl", "rb") as f:
+with open("./mystocks.pkl", "rb") as f:
     d = pickle.load(f)
     
 action_f = open('./numpy.txt', 'a')
 profit_f = open('./profit.txt', 'a')
 
 
-apl_open = d["mo"]
-apl_close = d["mc"]
+apl_open = d["dhanno_open"]
+apl_close = d["dhanno_close"]
 msf_open = d["mo"]
 msf_close = d["mc"]
 
