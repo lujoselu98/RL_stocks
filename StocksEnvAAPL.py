@@ -15,8 +15,8 @@ action_f = open('./numpy.txt', 'a')
 profit_f = open('./profit.txt', 'a')
 
 
-apl_open = d["jpmc_open"]
-apl_close = d["jpmc_close"]
+apl_open = d["gs_open"]
+apl_close = d["gs_close"]
 #msf_open = d["mo"]
 #msf_close = d["mc"]
 
