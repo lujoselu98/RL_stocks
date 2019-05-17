@@ -88,7 +88,7 @@ class StocksEnvAAPL(gym.Env):
             #self.g_t.append(self.reward)    
             #self.reward +=gain_avg
             total_prof = sum(self.ps)
-            print("\n ", gain_avg ," - ",total_prof," - ",self.buycount , " - " ,self.sellcount, "-" ,self.nothing,"- ",self.nothingpseudo) 
+            #print("\n ", gain_avg ," - ",total_prof," - ",self.buycount , " - " ,self.sellcount, "-" ,self.nothing,"- ",self.nothingpseudo) 
             profit_f.write(str(total_prof) + '\n')
             return np.array(new_state), gain_avg , True, { "msg": "done"}
         
