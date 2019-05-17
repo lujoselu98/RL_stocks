@@ -15,8 +15,8 @@ action_f = open('./numpy.txt', 'a')
 profit_f = open('./profit.txt', 'a')
 
 
-apl_open = d["trv_untrend_open"]
-apl_close = d["trv_untrend_close"]
+apl_open = d["pg_open"]
+apl_close = d["pg_close"]
 #msf_open = d["mo"]
 #msf_close = d["mc"]
 
