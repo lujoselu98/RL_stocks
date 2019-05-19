@@ -220,9 +220,8 @@ class StocksEnvAAPL(gym.Env):
         return  (apl_open[self.cur_timestep] - self.state[13]) * self.state[0]
     
     def render(self, mode='human'):
-        #print("Render called")
-        #plt.plot(self.g_t)
-        #plt.plot(self.ps)
+        print("")
+      
         
     def close(self):
         if self.viewer:
