@@ -15,8 +15,8 @@ action_f = open('./numpy.txt', 'a')
 profit_f = open('./profit.txt', 'a')
 
 
-apl_open = d["ao"]
-apl_close = d["ac"]
+apl_open = d["mo"]
+apl_close = d["mc"]
 #msf_open = d["mo"]
 #msf_close = d["mc"]
 
@@ -220,9 +220,9 @@ class StocksEnvAAPL(gym.Env):
         return  (apl_open[self.cur_timestep] - self.state[13]) * self.state[0]
     
     def render(self, mode='human'):
-        print("Render called")
+        #print("Render called")
         #plt.plot(self.g_t)
-        plt.plot(self.ps)
+        #plt.plot(self.ps)
         
     def close(self):
         if self.viewer:
