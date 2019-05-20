@@ -46,7 +46,7 @@ class StocksEnvAAPL(gym.Env):
         self.nothing=0
         self.nothingpseudo=0
 
-        self.series_length = 130
+        self.series_length = 100
 
         
         self.max_stride = 1
