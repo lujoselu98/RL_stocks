@@ -19,7 +19,7 @@ apl_open = d["dewa_open"]
 apl_close = d["dewa_close"]
 
 
-class StocksEnv(gym.Env):
+class StocksEnvAAPL(gym.Env):
     
 #initialisation of state variables and action space
     def __init__(self):
