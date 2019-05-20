@@ -78,7 +78,7 @@ class StocksEnvAAPL(gym.Env):
         
            
         #print((self.series_length * self.stride))
-        if cur_timestep >= self.starting_point + ('''self.series_length'''100 * self.stride):
+        if cur_timestep >= (self.starting_point + (100 * self.stride)):
             new_state = [self.state[0], self.state[1], self.next_opening_price(), \
                          *self.five_day_window(),self.state[4],self.next_open_price(self.state[0])]
             self.state = new_state
