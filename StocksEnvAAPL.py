@@ -77,7 +77,7 @@ class StocksEnvAAPL(gym.Env):
         gain_avg = (apl_open[cur_timestep] - self.state[13]) * self.state[0]
         
            
-        print(cur_timestep)
+        
         if cur_timestep >= self.starting_point + (self.series_length * self.stride):
             new_state = [self.state[0], self.state[1], self.next_opening_price(), \
                          *self.five_day_window(),self.state[4],self.next_open_price(self.state[0])]
@@ -156,7 +156,7 @@ class StocksEnvAAPL(gym.Env):
 
                 
         #print("\n action taken: ",action, " pf- " ,self.portfolio_value()," - ",self.state[0],  " - ",self.state[1])
-        self.cur_timestep += self.stride
+        self.cur_timestep += 1 #self.stride
 
         return retval
 
