@@ -50,7 +50,7 @@ class StocksEnvAAPL(gym.Env):
 
         
         self.max_stride = 1
-        self.stride = self.max_stride # no longer varying it
+        self.stride = 1 # no longer varying it
         
         self.done = False
         self.reward = 0
