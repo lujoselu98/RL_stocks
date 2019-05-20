@@ -77,7 +77,7 @@ class StocksEnvAAPL(gym.Env):
         gain_avg = (apl_open[cur_timestep] - self.state[13]) * self.state[0]
         
            
-        print(self.starting_point + (100 * self.stride))
+        print(self.starting_point + (100 * 1))
         if cur_timestep >= (self.starting_point + (100 * self.stride)):
             new_state = [self.state[0], self.state[1], self.next_opening_price(), \
                          *self.five_day_window(),self.state[4],self.next_open_price(self.state[0])]
