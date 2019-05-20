@@ -46,7 +46,7 @@ class StocksEnvAAPL(gym.Env):
         self.nothing=0
         self.nothingpseudo=0
 
-        self.series_length = 100
+        self.series_length = 185
 
         
         self.max_stride = 1
@@ -78,7 +78,7 @@ class StocksEnvAAPL(gym.Env):
         
            
         #print(self.starting_point + (100 * 1))
-        if cur_timestep >= (self.starting_point + (160 * 1)):
+        if cur_timestep >= (self.starting_point + (185 * 1)):
             new_state = [self.state[0], self.state[1], self.next_opening_price(), \
                          *self.five_day_window(),self.state[4],self.next_open_price(self.state[0])]
             self.state = new_state
@@ -163,7 +163,7 @@ class StocksEnvAAPL(gym.Env):
     def reset(self):
         self.state = np.zeros(15)
         self.starting_cash = 2500
-        self.cur_timestep = 10
+        self.cur_timestep = 0
         self.starting_point = self.cur_timestep
         self.state[0] = 10 # random.randint(20,100)
         self.state[1] = 1000 #random.randint(1000,5000)
