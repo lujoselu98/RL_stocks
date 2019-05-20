@@ -8,7 +8,7 @@ import random
 import matplotlib.pyplot as plt
 
 import pickle
-with open("./mystocktest.pkl", "rb") as f:
+with open("./mystockstest.pkl", "rb") as f:
     d = pickle.load(f)
     
 action_f = open('./numpy.txt', 'a')
