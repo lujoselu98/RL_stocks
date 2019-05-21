@@ -34,7 +34,7 @@ class StocksEnvAAPL(gym.Env):
         self.state = np.zeros(15)
         
 
-        self.series_length = 230
+        self.series_length = 220
         
         self.max_stride = 1
         self.stride = self.max_stride
@@ -148,7 +148,7 @@ class StocksEnvAAPL(gym.Env):
     def reset(self):
         self.state = np.zeros(15)
         self.starting_cash = 1000
-        self.cur_timestep = 0
+        self.cur_timestep = 10
         self.starting_point = self.cur_timestep
         self.state[0] = 10 
         self.state[1] = self.starting_cash
