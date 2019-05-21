@@ -138,7 +138,7 @@ class StocksEnvAAPL(gym.Env):
                 
                     
         #print("\n action taken: ",action, " pf- " ,self.portfolio_value()," - ",self.state[0],  " - ",self.state[1])
-        self.cur_timestep += self.
+        self.cur_timestep += 1
         
 
         return retval
