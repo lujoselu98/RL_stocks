@@ -71,6 +71,7 @@ class StocksEnvAAPL(gym.Env):
             self.state = new_state
 
             total_prof = sum(self.ps)
+            print(total_prof)
             #print("\n ", gain_avg ," - ",total_prof," - ",self.buycount , " - " ,self.sellcount, "-" ,self.nothing,"- ",self.nothingpseudo) 
             profit_f.write(str(total_prof) + '\n') #writes the total profit of episode to file
             return np.array(new_state), gain_avg , True, { "msg": "done"}
