@@ -7,7 +7,7 @@ import random
 
 #to import the stocks data
 import pickle
-with open("./mystockss.pkl", "rb") as f:
+with open("./mystocksstest.pkl", "rb") as f:
     d = pickle.load(f)
 
 #here the action sequence and profit of every episodes are stored    
@@ -15,8 +15,8 @@ action_f = open('./numpy.txt', 'a')
 profit_f = open('./profit.txt', 'a')
 
 #oopening and closing values of stock passed.
-apl_open = d["dewa_open"]
-apl_close = d["dewa_close"]
+apl_open = d["SBI_test_open"]
+apl_close = d["SBI_test_close"]
 
 
 class StocksEnvAAPL(gym.Env):
@@ -34,10 +34,9 @@ class StocksEnvAAPL(gym.Env):
         self.state = np.zeros(15)
         
 
-        self.series_length = 150
-
+        self.series_length = 230
         
-        self.max_stride = 5
+        self.max_stride = 1
         self.stride = self.max_stride
         
         self.done = False
@@ -139,7 +138,8 @@ class StocksEnvAAPL(gym.Env):
                 
                     
         #print("\n action taken: ",action, " pf- " ,self.portfolio_value()," - ",self.state[0],  " - ",self.state[1])
-        self.cur_timestep += self.stride
+        self.cur_timestep += self.
+        
 
         return retval
     
@@ -148,7 +148,7 @@ class StocksEnvAAPL(gym.Env):
     def reset(self):
         self.state = np.zeros(15)
         self.starting_cash = 1000
-        self.cur_timestep = 10
+        self.cur_timestep = 0
         self.starting_point = self.cur_timestep
         self.state[0] = 10 
         self.state[1] = self.starting_cash
